@@ -9,22 +9,31 @@ q_0= estado inicial;
 F= estados finais em que cada nome de estado está separado por espaço em branco;
 w= cadeia a ser submetida ao autômato
 
+ATENÇÂO:
+O arquivo de entrada nas 4 primeiras linhas deverá conter as informações da quíntupla e a quinta linha a cadeia a ser submetida ao autômato.
+cada estado e caractere do alfabeto tem que ser composto por apenas um simbolo e não pode conter espaço em branco.
+
+por exemplo:
+o "F" e "C" são estados de aceitão, então no aquivo de entrada.txt tem que estar assim: FC
+
 Segue um exemplo de entrada.txt.
-i f r
-0 1
+ifr
+01
 0111
-i 0 f
-i 1 r
-f 0 f
-f 1 f
-r 0 r
-r 1 r
+f
+i0f
+i1r
+f0f
+f1f
+r0r
+r1r
 
 
 Explicação: 
 i f r    <- Q= estados do autômato em que cada nome de estado está separado por espaço em branco;
 0 1    <-  o alfabeto em que cada símbolo está separado por espaço em branco;
 0111  <- cadeia a ser submetida ao autômato
+f    <- conjunto de estados finais em que cada nome de estado é um simbolo sem estar separado por espaço em branco;
 i 0 f   <-  função de transição no formato: estadoOrigem símboloAserConsumido estadoDestino;
 i 1 r    <-  função de transição no formato: estadoOrigem símboloAserConsumido estadoDestino;
 f 0 f    <-  função de transição no formato: estadoOrigem símboloAserConsumido estadoDestino;
@@ -50,7 +59,7 @@ e a terceira coluna é o estado de destino*/
 #include <stdlib.h>
 #include <string.h>
 
-void AFD(char Q[], char E[], char d[][3], char q0, char F[], char palavra[], int n);
+void AFD(char Q[], char E[], char d[][3], char q0, char F[], char palavra[]);
 int contarLinhasArquivo(const char *nomeArquivo);
 
 int main() {
@@ -60,7 +69,7 @@ int main() {
     char F[100];
     // Array bidimensional para armazenar múltiplas linhas
     int n = contarLinhasArquivo("entrada.txt");
-    char aux[n-3][3];
+    char aux[n-4][3];
 
 
     arq = fopen("entrada.txt", "r");
@@ -90,6 +99,14 @@ int main() {
         exit(1);
     }
 
+     // Lê uma linha inteira do arquivo e armazena em F
+    if (fgets(F, sizeof(F), arq) == NULL) {
+        printf("Erro ao ler a linha do arquivo\n");
+        fclose(arq);
+        exit(1);
+    }
+
+
     // Lê múltiplas linhas do arquivo e armazena em funcaoTransicao
     int i = 0;
     while (fgets(aux[i], sizeof(aux), arq) != NULL) {
@@ -105,11 +122,10 @@ int main() {
 
     printf("Estados do automato: %s\n", Q);
     q_0 = Q[0];
-    F[0] = Q[1];
     printf("Alfabeto: %s\n", alfabeto);
     printf("Cadeia: %s\n", cadeia);
     printf("Funcao de transicao: %c\n", aux[0][0]);
-    for (int i = 0; i < sizeof(aux)/3; i++) {
+    for (int i = 0; i < n-4; i++) {
         for (int j = 0; j < 3; j++) {
             printf("%c ", aux[i][j]);
         }
@@ -117,15 +133,16 @@ int main() {
     }
     printf("\n");
     //teste
-    AFD(Q, alfabeto, aux, q_0, F, cadeia, n);
+    AFD(Q, alfabeto, aux, q_0, F, cadeia);
     
 
     return 0;
 }
 
-void AFD(char Q[], char E[], char d[][3], char q0, char F[], char palavra[], int n)
+void AFD(char Q[], char E[], char d[][3], char q0, char F[], char palavra[])
 {
     int i = 0;
+    int n = contarLinhasArquivo("entrada.txt") - 4;
     char estadoAtual = q0;
     while (palavra[i] != '\0')
     {
@@ -139,7 +156,7 @@ void AFD(char Q[], char E[], char d[][3], char q0, char F[], char palavra[], int
         }
         i++;
     }
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; F[i] != '\0'; i++)
     {
         if (estadoAtual == F[i])
         {

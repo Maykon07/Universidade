@@ -1,6 +1,7 @@
-ifr
+ifrc
 01
 011001
+fc
 i0f
 i1r
 f0f
