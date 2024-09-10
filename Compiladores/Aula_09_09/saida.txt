@@ -1,0 +1,26 @@
+NUM -> 1 
+OP -> + 
+NUM -> 23 
+OP -> + 
+NUM -> 2 
+
+NUM -> 1 
+OP -> - 
+NUM -> 2 
+
+NUM -> 3 
+OP -> - 
+NUM -> 2 
+OP -> + 
+NUM -> 1 
+
+PARENTESES ->( 
+NUM -> 3 
+OP -> - 
+NUM -> 2 
+PARENTESES ->) 
+OP -> - 
+NUM -> 1 
+
+NUM -> 3 
+Caractere inválido: .

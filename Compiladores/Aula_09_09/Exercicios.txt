@@ -1,0 +1,35 @@
+1) seja a seguinte linguagem:
+	L= { w | w é uma expressão matemática contendo no maximo 2 operadores sobre numero natúrais}
+	Alfabeto = {0, 1,2,3,4,5,6,7,8,9,+,-,(,)}
+
+A) Defina no flex um analisador léxico para a linguagem acima.
+O analisador lerá expressões de um arquivo texto.
+
+A saída do analisador também será em um arquivo
+
+B) Faça uma Gramatica para L
+
+    S -> E
+    E -> T | T + T | T - T
+    T -> F | F + F | F - F
+    F -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+C) Verifique se sua gramatica é ambígua. Que problemas ter com a gramatica ambígua?
+
+    A gramática é ambígua.
+
+    Problemas com Gramática Ambígua
+    Dificuldade na Análise Sintática:
+
+    Analisadores sintáticos (parsers) têm dificuldade em lidar com gramáticas ambíguas, pois não conseguem decidir qual derivação seguir.
+    Interpretação Incorreta:
+
+    A ambiguidade pode levar a interpretações incorretas das expressões. Por exemplo, a ordem das operações pode ser mal interpretada, resultando em cálculos incorretos.
+    Complicações na Implementação:
+
+    Implementar um analisador sintático para uma gramática ambígua pode ser mais complexo e propenso a erros.
+
+D) Acrescente a expressao matemática do item (A) os '(' e ')'.
+   Redefina o analisador léxico e a gramatica.
+
+E) Os parenteses fazen diferença para o resultado da gramatica? Explique.
